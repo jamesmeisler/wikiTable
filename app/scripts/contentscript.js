@@ -10,8 +10,8 @@ function addControls(table,idx,width) {
 
 	//Click Handler
 	table.find('span.json').click(function() {
-		table.after('<p>' + JSON.stringify(json[idx-1]) + '</p>');
-	})
+		createGist(JSON.stringify(json[idx-1]));
+	});
 
 }
 
@@ -43,11 +43,30 @@ $.each(tables, function(idx,table) {
 	}
 });
 
-//Send to pastebin
+//Send to GitHub
+function createGist(json) {
+	var payload = {
+		"discription": "Wikipedia Table JSON",
+		"public": true,
+		"files": {
+			"wikiTable.json": {
+				"content": json
+			}
+		}
+	};
 
-var postParam = {
-	'api_user_key': 'fa778fe75637253b610c0af04566ac20',
-	'api_paste_private': '1',
-	'api_paste_name': 'Wiki Table',
-
+	$.ajax({
+		type: "POST",
+		url: "https://api.github.com/gists",
+		dataType: 'json',
+		async: true,
+		data: JSON.stringify(payload),
+		success: function(data) {
+			win = window.open(data.html_url, '_blank');
+			if (win)
+			{
+				win.focus();
+			}
+		}
+	});
 }
