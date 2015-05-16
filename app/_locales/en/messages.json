@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "wikiTables",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Export Wikipedia tables to JSON",
+    "description": "The description of the application"
+  }
+}
